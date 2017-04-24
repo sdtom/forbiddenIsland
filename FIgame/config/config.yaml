@@ -1,0 +1,16 @@
+#config_version=4
+
+hardware:
+  platform: p3_roc
+  driverboards: pdb
+
+#p3_roc Switche number - SW-16 Board(0-15)/Bank(A=0,B=1)/Switch num(0-7)
+switches:
+  test_switch1:
+    number: 0/0/0 #SW-16 board at address 0, Bank A, Switch 0
+
+#p3_roc Coil number - Ax-By-Z  - x=BoardAddress, y=Bank(A=0,B=1),Ouput num(0-7)
+# ex: A0-B1-6 = Address 0 board, Bank B, Output 6
+coils:
+  test_coil:
+    number: A0-B0-0
