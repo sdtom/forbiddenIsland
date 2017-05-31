@@ -28,11 +28,13 @@ switches:
 coils:
   c_flipper_right_power_p0: #yellow
     number: A0-B0-0
+    pulse_ms: 15
   c_flipper_right_hold_p0:  #white
     number: A0-B0-1
     allow_enable: yes # Hold coil allowed to stay on
   c_flipper_left_power_p0:  #blue
     number: A0-B0-2
+    pulse_ms: 15
   c_flipper_left_hold_p0:   #teal
     number: A0-B0-3
     allow_enable: yes # Hold coil allowed to stay on
