@@ -6,11 +6,47 @@ hardware:
 
 #p3_roc Switche number - SW-16 Board(0-15)/Bank(A=0,B=1)/Switch num(0-7)
 switches:
-  test_switch1:
-    number: 0/0/0 #SW-16 board at address 0, Bank A, Switch 0
+  s_flipper_left_EOS_p0:    #gray
+    number: 0/1/0
+  s_flipper_right_EOS_p0:   #orange
+    number: 0/1/1
+  s_test2_p0:
+    number: 0/1/2
+  s_test3_p0:
+    number: 0/1/3
+  s_test4_p0:
+    number: 0/1/4
+  s_test5_p0:
+    number: 0/1/5
+  s_flipper_right_button_p0:  #yellow
+    number: 0/1/6
+  s_flipper_left_button_p0: #brown
+    number: 0/1/7
 
 #p3_roc Coil number - Ax-By-Z  - x=BoardAddress, y=Bank(A=0,B=1),Ouput num(0-7)
 # ex: A0-B1-6 = Address 0 board, Bank B, Output 6
 coils:
-  test_coil:
+  c_flipper_right_power_p0: #yellow
     number: A0-B0-0
+  c_flipper_right_hold_p0:  #white
+    number: A0-B0-1
+    allow_enable: yes # Hold coil allowed to stay on
+  c_flipper_left_power_p0:  #blue
+    number: A0-B0-2
+  c_flipper_left_hold_p0:   #teal
+    number: A0-B0-3
+    allow_enable: yes # Hold coil allowed to stay on
+
+flippers:
+    left_flipper_p0:
+        main_coil: c_flipper_left_power_p0
+        hold_coil: c_flipper_left_hold_p0
+        activation_switch: s_flipper_left_button_p0
+        eos_switch: s_flipper_left_EOS_p0
+        enable_events: machine_reset_phase_3 # temp - this allows flipper to work at boot
+    right_flipper_p0:
+        main_coil: c_flipper_right_power_p0
+        hold_coil: c_flipper_right_hold_p0
+        activation_switch: s_flipper_right_button_p0
+        eos_switch: s_flipper_right_EOS_p0
+        enable_events: machine_reset_phase_3 # temp - this allows flipper to work at boot
