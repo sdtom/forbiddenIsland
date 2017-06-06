@@ -3,29 +3,54 @@
 hardware:
   platform: p3_roc
   driverboards: pdb
-
-#p3_roc Switche number - SW-16 Board(0-15)/Bank(A=0,B=1)/Switch num(0-7)
+#--------------------------------------------------------------------------
+#  SWITCHES
+#  p3_roc Switche number - SW-16 Board(0-15)/Bank(A=0,B=1)/Switch num(0-7)
+#--------------------------------------------------------------------------
 switches:
+  # --- Playfield 0 ---
   s_flipper_left_EOS_p0:    #gray
     number: 0/1/0
   s_flipper_right_EOS_p0:   #orange
     number: 0/1/1
-  s_test2_p0:
-    number: 0/1/2
-  s_test3_p0:
-    number: 0/1/3
-  s_test4_p0:
-    number: 0/1/4
-  s_test5_p0:
-    number: 0/1/5
+  # s_test2_p0:
+  #   number: 0/1/2
+  # s_test3_p0:
+  #   number: 0/1/3
+  # s_test4_p0:
+  #   number: 0/1/4
+  # s_test5_p0:
+  #   number: 0/1/5
   s_flipper_right_button_p0:  #yellow
     number: 0/1/6
   s_flipper_left_button_p0: #brown
     number: 0/1/7
 
-#p3_roc Coil number - Ax-By-Z  - x=BoardAddress, y=Bank(A=0,B=1),Ouput num(0-7)
+  # --- Playfield 1 ---
+  s_flipper_left_EOS_p1:    #gray (swapped at SW-16 connector)
+    number: 0/0/0
+  s_flipper_right_EOS_p1:   #orange (swapped at SW-16 connector)
+    number: 0/0/1
+  # s_test2_p1:
+  #   number: 0/0/2
+  # s_test3_p1:
+  #   number: 0/0/3
+  # s_test4_p1:
+  #   number: 0/0/4
+  # s_test5_p1:
+  #   number: 0/0/5
+  s_flipper_right_button_p1:  #yellow
+    number: 0/0/6
+  s_flipper_left_button_p1: #brown
+    number: 0/0/7    
+
+#--------------------------------------------------------------------------
+#  COILS
+# p3_roc Coil number - Ax-By-Z  - x=BoardAddress, y=Bank(A=0,B=1),Ouput num(0-7)
 # ex: A0-B1-6 = Address 0 board, Bank B, Output 6
+#--------------------------------------------------------------------------
 coils:
+  # --- Playfield 0 ----
   c_flipper_right_power_p0: #yellow
     number: A0-B0-0
     pulse_ms: 15
@@ -39,7 +64,25 @@ coils:
     number: A0-B0-3
     allow_enable: yes # Hold coil allowed to stay on
 
+  # --- Playfield 1 ---
+  c_flipper_left_power_p1: #yellow
+    number: A0-B1-0
+    pulse_ms: 15
+  c_flipper_left_hold_p1:  #white
+    number: A0-B1-1
+    allow_enable: yes # Hold coil allowed to stay on
+  c_flipper_right_power_p1:  #blue
+    number: A0-B1-2
+    pulse_ms: 15
+  c_flipper_right_hold_p1:   #teal
+    number: A0-B1-3
+    allow_enable: yes # Hold coil allowed to stay on
+
+#--------------------------------------------------------------------------
+#  FLIPPERS
+#--------------------------------------------------------------------------
 flippers:
+    # Playfield 0
     left_flipper_p0:
         main_coil: c_flipper_left_power_p0
         hold_coil: c_flipper_left_hold_p0
@@ -52,3 +95,16 @@ flippers:
         activation_switch: s_flipper_right_button_p0
         eos_switch: s_flipper_right_EOS_p0
         enable_events: machine_reset_phase_3 # temp - this allows flipper to work at boot
+    # Playfield 1
+    left_flipper_p1:
+        main_coil: c_flipper_left_power_p1
+        hold_coil: c_flipper_left_hold_p1
+        activation_switch: s_flipper_left_button_p1
+        eos_switch: s_flipper_left_EOS_p1
+        enable_events: machine_reset_phase_3 # temp - this allows flipper to work at boot
+    right_flipper_p1:
+        main_coil: c_flipper_right_power_p1
+        hold_coil: c_flipper_right_hold_p1
+        activation_switch: s_flipper_right_button_p1
+        eos_switch: s_flipper_right_EOS_p1
+        enable_events: machine_reset_phase_3 # temp - this allows flipper to work at boot        
