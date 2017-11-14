@@ -27,9 +27,9 @@ switches:
     number: 0/1/7
 
   # --- Playfield 1 ---
-  s_flipper_left_EOS_p1:    #gray (swapped at SW-16 connector)
+  s_flipper_right_EOS_p1:    #gray (didn't mirror P0)
     number: 0/0/0
-  s_flipper_right_EOS_p1:   #orange (swapped at SW-16 connector)
+  s_flipper_left_EOS_p1:   #orange 
     number: 0/0/1
   # s_test2_p1:
   #   number: 0/0/2
@@ -63,10 +63,6 @@ coils:
   c_flipper_left_hold_p0:   #teal
     number: A0-B0-3
     allow_enable: yes # Hold coil allowed to stay on
-  c_canon_fire:   #TBD
-    number: A0-B0-4
-    allow_enable: no
-    pulse_ms: 15
 
   # --- Playfield 1 ---
   c_flipper_left_power_p1: #yellow
@@ -81,7 +77,10 @@ coils:
   c_flipper_right_hold_p1:   #teal
     number: A0-B1-3
     allow_enable: yes # Hold coil allowed to stay on
-
+  c_canon_fire:   #TBD
+    number: A0-B1-4
+    allow_enable: no
+    pulse_ms: 20
 #--------------------------------------------------------------------------
 #  FLIPPERS
 #--------------------------------------------------------------------------
@@ -106,16 +105,16 @@ flippers:
         activation_switch: s_flipper_left_button_p1
         eos_switch: s_flipper_left_EOS_p1
         enable_events: machine_reset_phase_3 # temp - this allows flipper to work at boot
-    right_flipper_p1:
-        main_coil: c_flipper_right_power_p1
-        hold_coil: c_flipper_right_hold_p1
-        activation_switch: s_flipper_right_button_p1
-        eos_switch: s_flipper_right_EOS_p1
-        enable_events: machine_reset_phase_3 # temp - this allows flipper to work at boot        
+    # right_flipper_p1:
+    #     main_coil: c_flipper_right_power_p1
+    #     hold_coil: c_flipper_right_hold_p1
+    #     activation_switch: s_flipper_right_button_p1
+    #     eos_switch: s_flipper_right_EOS_p1
+    #     enable_events: machine_reset_phase_3 # temp - this allows flipper to work at boot        
 
- autofire_coils:
+autofire_coils:
     test_trough:
         coil: c_canon_fire
-        switch: s_flipper_left_button_p0
+        switch: s_flipper_right_button_p1
         enable_events: machine_reset_phase_3 # temp - this allows flipper to work at boot
  
