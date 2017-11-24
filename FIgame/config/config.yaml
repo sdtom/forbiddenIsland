@@ -1,8 +1,43 @@
-#config_version=4
+#config_version=5
+
+playfields:
+    playfield0:
+        label: Playfield 0
+        default_source_device: None
+    playfield1:
+        label: Playfield 1
+        default_source_device: None
 
 hardware:
   platform: p3_roc
   driverboards: pdb
+  stepper_controllers: trinamics_steprocker
+
+trinamics_steprocker:
+  debug: true
+  port: /dev/ttyACM0
+
+steppers:
+    center_turret:
+        number: 0
+        debug: true     
+        mode: position
+        move_current:  25 #percent
+        hold_current:  5 #percent
+        homing_direction: clockwise #when facing the shaft
+        homing_speed: 0.1 #user units/sec
+        microstep_per_fullstep: 16 # 1/16 mode (1 step = 1/16 of a full step)
+        fullstep_per_userunit: 1400 # UU=1 Revolution = 200 full steps per rev (1.8 deg stepper) * 7 gear ratio
+        velocity_limit: 0.5 #user units/sec   (so, 0.8 RPS of output gear )
+        acceleration_limit: 2.0 #user units/sec^2  (so, 2 RPS^S of output gear)
+        reset_position: 0
+        reset_events: machine_reset_phase_3
+        named_positions:
+             0.0: test_00
+             0.6: test_01
+             1.0: test_10
+
+
 #--------------------------------------------------------------------------
 #  SWITCHES
 #  p3_roc Switche number - SW-16 Board(0-15)/Bank(A=0,B=1)/Switch num(0-7)
@@ -44,6 +79,37 @@ switches:
   s_flipper_left_button_p1: #brown
     number: 0/0/7    
 
+  # --- Center Mechanism ---
+  #  |----> Ball trough ---
+  s_cmbt_ball1: # purple
+    number: 1/0/4
+    type: nc
+  s_cmbt_ball2: # orange
+    number: 1/1/7
+  s_cmbt_ball3: # yellow
+    number: 1/1/1
+  s_cmbt_ball4: # brown
+    number: 1/1/2
+  s_cmbt_ball5: # grey
+    number: 1/1/3
+  s_cmbt_ball6: # red
+    number: 1/1/4
+  s_cmbt_ball7: # purple
+    number: 1/1/5
+  s_cmbt_ball8: # teal
+    number: 1/1/6
+  s_cmbt_jam:
+    number: 1/0/0  # orange
+    type: nc
+  #   |----> subway entrances ---
+  s_cmbt_entrance_p1:
+    number: 1/0/2  # orange (again for some reason)
+    type: nc
+  s_cmbt_entrance_p0:
+    number: 1/0/3  # red
+    type: nc
+
+
 #--------------------------------------------------------------------------
 #  COILS
 # p3_roc Coil number - Ax-By-Z  - x=BoardAddress, y=Bank(A=0,B=1),Ouput num(0-7)
@@ -53,51 +119,71 @@ coils:
   # --- Playfield 0 ----
   c_flipper_right_power_p0: #yellow
     number: A0-B0-0
-    pulse_ms: 15
+    default_pulse_ms: 15
+    allow_enable: false
+    default_hold_power: 0.125
   c_flipper_right_hold_p0:  #white
     number: A0-B0-1
-    allow_enable: yes # Hold coil allowed to stay on
+    allow_enable: true # Hold coil allowed to stay on
+    default_hold_power: 1.0
   c_flipper_left_power_p0:  #blue
     number: A0-B0-2
-    pulse_ms: 15
+    default_pulse_ms: 15
+    allow_enable: false
+    default_hold_power: 0.125
   c_flipper_left_hold_p0:   #teal
     number: A0-B0-3
-    allow_enable: yes # Hold coil allowed to stay on
+    allow_enable: true # Hold coil allowed to stay on
+    default_hold_power: 1.0
 
   # --- Playfield 1 ---
   c_flipper_left_power_p1: #yellow
     number: A0-B1-0
-    pulse_ms: 15
+    default_pulse_ms: 15
+    allow_enable: false
+    default_hold_power: 0.125
   c_flipper_left_hold_p1:  #white
     number: A0-B1-1
-    allow_enable: yes # Hold coil allowed to stay on
+    allow_enable: true # Hold coil allowed to stay on
+    default_hold_power: 1.0
   c_flipper_right_power_p1:  #blue
     number: A0-B1-2
-    pulse_ms: 15
+    allow_enable: false
+    default_pulse_ms: 15
+    default_hold_power: 0.125
   c_flipper_right_hold_p1:   #teal
     number: A0-B1-3
-    allow_enable: yes # Hold coil allowed to stay on
-  c_canon_fire:   #TBD
+    allow_enable: true # Hold coil allowed to stay on
+    default_hold_power: 1.0
+
+  # --- Center Mech ----
+  c_cmbt_eject:   # blue
     number: A0-B1-4
-    allow_enable: no
-    pulse_ms: 20
+    allow_enable: false
+    default_pulse_ms: 20
+
 #--------------------------------------------------------------------------
 #  FLIPPERS
 #--------------------------------------------------------------------------
 flippers:
     # Playfield 0
     left_flipper_p0:
-        main_coil: c_flipper_left_power_p0
-        hold_coil: c_flipper_left_hold_p0
-        activation_switch: s_flipper_left_button_p0
-        eos_switch: s_flipper_left_EOS_p0
-        enable_events: machine_reset_phase_3 # temp - this allows flipper to work at boot
+      main_coil: c_flipper_left_power_p0
+      activation_switch: s_flipper_left_button_p0
+      eos_switch: s_flipper_left_EOS_p0
+      enable_events: machine_reset_phase_3 # temp - this allows flipper to work at boot
+      use_eos: true
+      playfield: playfield0
+
     right_flipper_p0:
         main_coil: c_flipper_right_power_p0
         hold_coil: c_flipper_right_hold_p0
         activation_switch: s_flipper_right_button_p0
         eos_switch: s_flipper_right_EOS_p0
         enable_events: machine_reset_phase_3 # temp - this allows flipper to work at boot
+        use_eos: true
+        playfield: playfield0
+
     # Playfield 1
     left_flipper_p1:
         main_coil: c_flipper_left_power_p1
@@ -105,16 +191,44 @@ flippers:
         activation_switch: s_flipper_left_button_p1
         eos_switch: s_flipper_left_EOS_p1
         enable_events: machine_reset_phase_3 # temp - this allows flipper to work at boot
-    # right_flipper_p1:
-    #     main_coil: c_flipper_right_power_p1
-    #     hold_coil: c_flipper_right_hold_p1
-    #     activation_switch: s_flipper_right_button_p1
-    #     eos_switch: s_flipper_right_EOS_p1
-    #     enable_events: machine_reset_phase_3 # temp - this allows flipper to work at boot        
-
-autofire_coils:
-    test_trough:
-        coil: c_canon_fire
-        switch: s_flipper_right_button_p1
+        use_eos: true
+        playfield: playfield1
+        
+    right_flipper_p1:
+        main_coil: c_flipper_right_power_p1
+        hold_coil: c_flipper_right_hold_p1
+        activation_switch: s_flipper_right_button_p1
+        eos_switch: s_flipper_right_EOS_p1
         enable_events: machine_reset_phase_3 # temp - this allows flipper to work at boot
+        use_eos: true
+        playfield: playfield1
+
+
+# # autofire_coils:
+# #     test_trough:
+# #         coil: c_canon_fire
+# #         switch: s_flipper_right_button_p1
+# #         enable_events: machine_reset_phase_3 # temp - this allows flipper to work at boot
  
+ #-----------------------------------------------------------------------------------------
+ # Ball Devices
+ # ----------------------------------------------------------------------------------------
+ball_devices:
+    bd_trough:
+        ball_switches: s_cmbt_ball1,s_cmbt_ball2,s_cmbt_ball3,s_cmbt_ball4,s_cmbt_ball5,s_cmbt_ball6,s_cmbt_ball7,s_cmbt_ball8,s_cmbt_jam
+        eject_coil: c_cmbt_eject
+        tags:
+        jam_switch: s_cmbt_jam
+        eject_coil_jam_pulse: 15ms
+        eject_targets: playfield0,playfield1
+        captures_from: playfield0
+        ball_missing_target: playfield0
+    
+#     #dummy:
+#     #    tags: ball_add_live
+#     #    mechanical_eject: true
+
+
+
+
+
