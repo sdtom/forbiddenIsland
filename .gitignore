@@ -87,3 +87,7 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+FIgame/data/audits\.yaml
+
+FIgame/data/machine_vars\.yaml

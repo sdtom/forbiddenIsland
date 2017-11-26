@@ -1,12 +1,15 @@
 #config_version=5
+game:
+  balls_per_game: 3
 
 playfields:
-    playfield0:
-        label: Playfield 0
-        default_source_device: None
-    playfield1:
-        label: Playfield 1
-        default_source_device: None
+  playfield:
+    label: Playfield 0
+    tags: default
+    default_source_device: bd_trough
+  # playfield1:
+  #     label: Playfield 1
+  #     default_source_device: None
 
 hardware:
   platform: p3_roc
@@ -15,6 +18,34 @@ hardware:
 
 trinamics_steprocker:
   port: /dev/ttyACM0
+
+displays:
+  window:
+    width: 800
+    height: 600
+
+slides:
+  welcome_slide:
+    widgets:
+      - type: text
+        text: Forbidden Island!
+        font_size: 50
+        color: red
+      - type: rectangle
+        width: 400
+        height: 60
+  attract_started:
+    widgets:
+      - text: ATTRACT MODE
+        type: text
+
+slide_player:
+  init_done: welcome_slide
+  mode_attract_started: attract_started
+  ball_started:
+    widgets:
+      type: text
+      text: PLAYER (number) BALL (ball)
 
 steppers:
     center_turret:
@@ -110,6 +141,10 @@ switches:
     number: 1/0/3  # red
     type: nc
 
+  # misc
+  s_start:
+    number: 1/1/0
+    tags: start
 
 #--------------------------------------------------------------------------
 #  COILS
@@ -174,7 +209,7 @@ flippers:
       eos_switch: s_flipper_left_EOS_p0
       enable_events: machine_reset_phase_3 # temp - this allows flipper to work at boot
       use_eos: true
-      playfield: playfield0
+      playfield: playfield
 
     right_flipper_p0:
         main_coil: c_flipper_right_power_p0
@@ -183,7 +218,7 @@ flippers:
         eos_switch: s_flipper_right_EOS_p0
         enable_events: machine_reset_phase_3 # temp - this allows flipper to work at boot
         use_eos: true
-        playfield: playfield0
+        playfield: playfield
 
     # Playfield 1
     left_flipper_p1:
@@ -193,7 +228,7 @@ flippers:
         eos_switch: s_flipper_left_EOS_p1
         enable_events: machine_reset_phase_3 # temp - this allows flipper to work at boot
         use_eos: true
-        playfield: playfield1
+        playfield: playfield
         
     right_flipper_p1:
         main_coil: c_flipper_right_power_p1
@@ -202,7 +237,7 @@ flippers:
         eos_switch: s_flipper_right_EOS_p1
         enable_events: machine_reset_phase_3 # temp - this allows flipper to work at boot
         use_eos: true
-        playfield: playfield1
+        playfield: playfield
 
 
 # # autofire_coils:
@@ -218,17 +253,20 @@ ball_devices:
     bd_trough:
         ball_switches: s_cmbt_ball1,s_cmbt_ball2,s_cmbt_ball3,s_cmbt_ball4,s_cmbt_ball5,s_cmbt_ball6,s_cmbt_ball7,s_cmbt_ball8,s_cmbt_jam
         eject_coil: c_cmbt_eject
-        tags:
+        tags: trough, home, drain # for now
         jam_switch: s_cmbt_jam
         eject_coil_jam_pulse: 15ms
-        eject_targets: playfield0,playfield1
-        captures_from: playfield0
-        ball_missing_target: playfield0
+        eject_targets: playfield
+        captures_from: playfield
+        ball_missing_target: playfield
     
 #     #dummy:
 #     #    tags: ball_add_live
 #     #    mechanical_eject: true
 
+keyboard:
+    s:
+      switch: s_start
 
 
 
