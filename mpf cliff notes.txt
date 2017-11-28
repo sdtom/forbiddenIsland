@@ -1,0 +1,25 @@
+Notes
+
+Shots
+- convert switches to other events with some modifiers
+- sequence of switches within a time period as well
+
+Achievements
+- Mode inserts like the Cards in IJ 
+- off, blinking, solid 
+
+Holds
+- defines a set of hold and release conditions for a ball device
+- transient locks , not ball 'locks'
+
+Ball Locks
+- Deprecated
+
+Multiball Locks
+- How many balls to hold
+- acounts for virtual / holding across turns with other people taking physical balls in between
+- spits out a full event when full which can trigger multiball mode or whatever
+
+Ball Save
+- specifically time periods that re-serve any drains
+
