@@ -23,3 +23,98 @@ Multiball Locks
 Ball Save
 - specifically time periods that re-serve any drains
 
+Ball bonus
+- end of ball bonus calculating
+
+Carousel
+- an itemized list that can be used for mode selection
+
+combo switches
+- simultaneous switch turned into it's own even (both flippers together = cancel is a built in one)
+
+extra balls
+- can be awarded once
+
+high scores
+- entering / maintaining high score lists
+
+logic blocks - note default is to disable after they've run but can be overridden
+	there's also discussion about how to use say the counter one where there is an event each time the counter increments
+	(_updated event) which can be used to escalate a show.. so, each time another increment, play the same or a different show based on
+	the counter value
+
+	- accruals
+	one or more events triggers another event (any order)
+
+	- counters 
+	generate a new event after some event happenns X amount of times
+	also used to ensure something happens once only.. this is lit, make shot (count of 1) then send out a new event that starts mode, but that should happen once ever
+
+	- sequences
+	events in a specific order triggers another event 
+
+Modes
+	the main classes.  An event to activate one, priorties set to see which one is most active
+	container for all these game logic notices on a temporary basis
+	some 'base' mode for when nothing else is running
+	in addition to game logic, can have shows and slides ; most things that can go in config.yaml as well (excapt devices)
+	
+multiball
+	defining a multiball.. how many balls, start / stop events which ball devices to use
+	
+player variables
+	custom variables stored per user
+	the manual seems to suggest they don't work too well in config files compared to actual code
+	
+timed_switch
+	duration of a switch press = another event 
+	flipper cradle is their example
+
+timers
+	arbitrary timers with tick increments, completion times etc
+	events can start, stop, pause
+	events on each tick
+	events complete
+	
+shot
+	wrapper for switch or set of switches (within a time or after a time)
+	adds state, can tie shows to states (led blinking, flashing, etc)
+
+scoring 
+	assign a score increment to an event
+
+---- SHOWS ------
+set of things to be done in order with time constraints (so, playback steps)
+time delays, durations etc
+loops
+what can you put? Players
+when players are in a show, they lose the _player add an s
+so:
+led_player: -> leds
+sound_player -> sounds
+slide_player: -> slides
+
+can parameterize (show_tokens is their term) so a show can be applied to different items like leds
+-> works like #defines so there's no type checking or anything, it replaces the strings
+
+starting and stopping?
+- stop when a mode stops
+- start via show_player tag, what is below is a list of events, then the show to run
+- you can manipulate the show a bit in the show_player setup..  loops, slow down, speed up the play of a show
+- some sync mechanisms too to try to keep multiple shows kicking off at same time vs in sequence (for when precise sync matters)
+
+
+
+---- PLAYERS -----
+	
+
+	
+
+	
+	
+
+
+--- Config file reference ---
+config: 
+- can have lists of 
+
