@@ -104,17 +104,84 @@ starting and stopping?
 - some sync mechanisms too to try to keep multiple shows kicking off at same time vs in sequence (for when precise sync matters)
 
 
-
 ---- PLAYERS -----
-	
+most entries of a player are event names.. so, things to do when an event happens
 
-	
+config | shows 
 
-	
-	
+bcp_player | bcps
+- backbox control protocol
+- connection between game and the media controller
+- not used in examples, probably not used much
+
+coil_player | coils
+- pulse / enable / disable
+
+event_player | events
+- send events when an event happens
+- always live if in config file (or machine wide or mode ok)
+- no example of use in show, seems to make more sense as config
+- looks better than single event accruals if want live all the time  
+
+flasher_player | flashers
+- not much info.. looks like a duration
+
+gi_player | gis
+led_player | leds
+light_player | lights
+
+queue_event_player | N/A
+- like event player but for "queue" events
+- queue_event: ending
+- events_when_finished: ended
+
+so, all handlers will trigger on ending , when they are done, ended will trigger
+
+queue_relay_player | N/A
+- looks like how you register handler for a queue event
+- per queue event, there is post: <regular event> and wait_for: <some other regular event>
+- its at the end of the wait for that the queue event player will mark at least your handler finished
+
+random_event_player | random_events
+show_player | shows
+slide_player | slides
+sound_loop_set_player | sound_loop_sets
+sound_player | sounds
+track_player | tracks
+trigger_player | trigger
+widget_player | widgets
+
+----- EVENTS -----
+Two types:
+Basic
+-- name, maybe keyword:argument pairs
+-- event manager call registered handlers 1 by 1 by priority order
+
+Queue Evennts
+- 'ending is posted
+- do stuff
+- 'ended is posted
+
+which ones are queue events?
+- seems like have to dig around in event reference.. 
+- there's a naming pattern where xxx-ing are queue events
+ball_ending 
+ball_starting
+game_ending
+mode_starting
+player turn starting
+player turn ending
+game starting
+player adding
+balldevice eject attempt
+- all the initialize / reset phasese are queue reley events
+
+handling events:
+- players generally trigger off events
+- event fields in config items..  "reset_events" "events_when_finished" etc
 
 
 --- Config file reference ---
 config: 
-- can have lists of 
+- can have lists of other config files to organize
 
