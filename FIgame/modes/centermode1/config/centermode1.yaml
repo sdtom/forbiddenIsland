@@ -1,6 +1,8 @@
 #config_version=5
 mode:
-    start_events: ball_starting
+    #start_events: ball_starting
+    start_events: stepper_center_turret_ready
+    code: turret.Turret
     priority: 101
 
 
