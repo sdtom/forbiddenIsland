@@ -1,0 +1,11 @@
+#config_version=5
+mode:
+    start_events: ball_starting
+    priority: 101
+
+
+event_player:
+    s_cmbt_entrance_p0_active:
+      goto_playfield0_sdtm
+    s_cmbt_entrance_p1_active:
+      goto_playfield1_sdtm

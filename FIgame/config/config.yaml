@@ -34,18 +34,14 @@ slides:
       - type: rectangle
         width: 400
         height: 60
-  attract_started:
-    widgets:
-      - text: ATTRACT MODE
-        type: text
 
 slide_player:
   init_done: welcome_slide
-  mode_attract_started: attract_started
-  ball_started:
-    widgets:
-      type: text
-      text: PLAYER (number) BALL (ball)
+
+queue_relay_player:
+  machine_reset_phase_3:
+    post: "waiting_on_stepper"
+    wait_for: "stepper_center_turret_ready"
 
 steppers:
     center_turret:
@@ -54,8 +50,8 @@ steppers:
         mode: position
         pos_max: 1.0
         pos_min: -1.0
-        move_current:  25 #percent
-        hold_current:  10 #percent
+        move_current:  32 #percent
+        hold_current:   8 #percent
         homing_direction: clockwise #when facing the shaft
         homing_speed: 0.1 #user units/sec
         microstep_per_fullstep: 16 # 1/16 mode (1 step = 1/16 of a full step)
@@ -65,10 +61,11 @@ steppers:
         reset_position: -0.05
         reset_events: machine_reset_phase_3
         named_positions:
-             0.0: test_00
-             0.6: test_01
-             1.0: test_10
-
+              -0.05: goto_playfield1_sdtm
+              0.45: goto_playfield0_sdtm
+modes:
+  - base
+  - centermode1
 
 #--------------------------------------------------------------------------
 #  SWITCHES
