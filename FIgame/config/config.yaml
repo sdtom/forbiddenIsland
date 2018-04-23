@@ -3,10 +3,10 @@ game:
   balls_per_game: 3
 
 playfields:
-  playfield:
+  playfield0:
     label: Playfield 0
     tags: default
-    default_source_device: bd_trough
+    default_source_device: bd_plunger_p0
   # playfield1:
   #     label: Playfield 1
   #     default_source_device: None
@@ -83,17 +83,23 @@ switches:
     number: 0/1/1
   s_right_sling_p0:
     number: 2/0/2
+    tags: playfield0_active
   s_left_sling_p0:
     number: 2/0/4
+    tags: playfield0_active
   s_right_outlane_p0:
     number: 2/0/6
+    tags: playfield0_active
   s_right_inlane_p0:
     number: 2/1/0
+    tags: playfield0_active
   s_left_outlane_p0:
     number: 2/0/3
+    tags: playfield0_active
   s_left_inlane_p0:
     number: 2/0/7
-  s_trough_exit_p0:
+    tags: playfield0_active
+  s_plunger_p0:
     number: 2/0/5
   s_trough_jam_p0:
     number: 3/1/7
@@ -202,7 +208,7 @@ coils:
     default_pulse_ms: 10
     allow_enable: false
     default_hold_power: 0.125
-  c_trough_launcher_p0: #blue
+  c_plunger_p0: #blue
     number: A0-B0-7
     default_pulse_ms: 10
     allow_enable: false
@@ -255,12 +261,12 @@ light_player:
 flippers:
     # Playfield 0
     left_flipper_p0:
-      main_coil: c_flipper_left_power_p0
-      activation_switch: s_flipper_left_button_p0
-      eos_switch: s_flipper_left_EOS_p0
-      enable_events: machine_reset_phase_3 # temp - this allows flipper to work at boot
-      use_eos: true
-      playfield: playfield
+        main_coil: c_flipper_left_power_p0
+        activation_switch: s_flipper_left_button_p0
+        eos_switch: s_flipper_left_EOS_p0
+        enable_events: machine_reset_phase_3 # temp - this allows flipper to work at boot
+        use_eos: true
+        playfield: playfield
 
     right_flipper_p0:
         main_coil: c_flipper_right_power_p0
@@ -290,18 +296,23 @@ flippers:
         use_eos: true
         playfield: playfield
 
+#------------------------------------------------------------------------------------------
+# Auto Fire Coils
+#------------------------------------------------------------------------------------------
 
-# # autofire_coils:
-# #     test_trough:
-# #         coil: c_canon_fire
-# #         switch: s_flipper_right_button_p1
-# #         enable_events: machine_reset_phase_3 # temp - this allows flipper to work at boot
+autofire_coils:
+    left_sling_p0:
+      coil: c_left_sling_p0
+      switch: s_left_sling_p0
+    right_sling_p0:
+      coil: c_right_sling_p0
+      switch: s_right_sling_p0      
  
  #-----------------------------------------------------------------------------------------
  # Ball Devices
  # ----------------------------------------------------------------------------------------
 ball_devices:
-    bd_trough:
+    bd_centrtrough:
         ball_switches: s_cmbt_ball1,s_cmbt_ball2,s_cmbt_ball3,s_cmbt_ball4,s_cmbt_ball5,s_cmbt_ball6,s_cmbt_ball7,s_cmbt_ball8,s_cmbt_jam
         eject_coil: c_cmbt_eject
         tags: trough #, home, drain # for now
@@ -310,6 +321,22 @@ ball_devices:
         eject_targets: playfield
         captures_from: playfield
         ball_missing_target: playfield
+
+    bd_trough_p0:
+        ball_switches: s_trough_ball1_p0,s_trough_ball2_p0,s_trough_ball3_p0,s_trough_ball4_p0,s_trough_ball5_p0,s_trough_ball6_p0,s_trough_ball7_p0,s_trough_ball8_p0,s_trough_jam_p0
+        eject_coil: c_trough_p0
+        tags: trough,home,drain
+        jam_switch: s_trough_jam_p0
+        eject_coil_jam_pulse: 15ms
+        eject_targets: bd_plunger_p0
+        captures_from: playfield
+        ball_missing_target: playfield
+
+    bd_plunger_p0:
+        ball_switches: s_plunger_p0
+        eject_coil: c_plunger_p0
+        eject_timeouts: 3s
+
     
 #     #dummy:
 #     #    tags: ball_add_live
