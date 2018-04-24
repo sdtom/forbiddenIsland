@@ -65,7 +65,7 @@ steppers:
               0.45: goto_playfield0_sdtm
 modes:
   - base
-  - centermode1
+#  - centermode1
 
 #--------------------------------------------------------------------------
 #  SWITCHES
@@ -266,7 +266,7 @@ flippers:
         eos_switch: s_flipper_left_EOS_p0
         enable_events: machine_reset_phase_3 # temp - this allows flipper to work at boot
         use_eos: true
-        playfield: playfield
+        playfield: playfield0
 
     right_flipper_p0:
         main_coil: c_flipper_right_power_p0
@@ -275,26 +275,26 @@ flippers:
         eos_switch: s_flipper_right_EOS_p0
         enable_events: machine_reset_phase_3 # temp - this allows flipper to work at boot
         use_eos: true
-        playfield: playfield
+        playfield: playfield0
 
-    # Playfield 1
-    left_flipper_p1:
-        main_coil: c_flipper_left_power_p1
-        hold_coil: c_flipper_left_hold_p1
-        activation_switch: s_flipper_left_button_p1
-        eos_switch: s_flipper_left_EOS_p1
-        enable_events: machine_reset_phase_3 # temp - this allows flipper to work at boot
-        use_eos: true
-        playfield: playfield
+    # # Playfield 1
+    # left_flipper_p1:
+    #     main_coil: c_flipper_left_power_p1
+    #     hold_coil: c_flipper_left_hold_p1
+    #     activation_switch: s_flipper_left_button_p1
+    #     eos_switch: s_flipper_left_EOS_p1
+    #     enable_events: machine_reset_phase_3 # temp - this allows flipper to work at boot
+    #     use_eos: true
+    #     playfield: playfield
         
-    right_flipper_p1:
-        main_coil: c_flipper_right_power_p1
-        hold_coil: c_flipper_right_hold_p1
-        activation_switch: s_flipper_right_button_p1
-        eos_switch: s_flipper_right_EOS_p1
-        enable_events: machine_reset_phase_3 # temp - this allows flipper to work at boot
-        use_eos: true
-        playfield: playfield
+    # right_flipper_p1:
+    #     main_coil: c_flipper_right_power_p1
+    #     hold_coil: c_flipper_right_hold_p1
+    #     activation_switch: s_flipper_right_button_p1
+    #     eos_switch: s_flipper_right_EOS_p1
+    #     enable_events: machine_reset_phase_3 # temp - this allows flipper to work at boot
+    #     use_eos: true
+    #     playfield: playfield
 
 #------------------------------------------------------------------------------------------
 # Auto Fire Coils
@@ -304,9 +304,11 @@ autofire_coils:
     left_sling_p0:
       coil: c_left_sling_p0
       switch: s_left_sling_p0
+      playfield: playfield0
     right_sling_p0:
       coil: c_right_sling_p0
-      switch: s_right_sling_p0      
+      switch: s_right_sling_p0
+      playfield: playfield0
  
  #-----------------------------------------------------------------------------------------
  # Ball Devices
@@ -318,9 +320,9 @@ ball_devices:
         tags: trough #, home, drain # for now
         jam_switch: s_cmbt_jam
         eject_coil_jam_pulse: 15ms
-        eject_targets: playfield
-        captures_from: playfield
-        ball_missing_target: playfield
+        eject_targets: playfield0
+        captures_from: playfield0
+        ball_missing_target: playfield0
 
     bd_trough_p0:
         ball_switches: s_trough_ball1_p0,s_trough_ball2_p0,s_trough_ball3_p0,s_trough_ball4_p0,s_trough_ball5_p0,s_trough_ball6_p0,s_trough_ball7_p0,s_trough_ball8_p0,s_trough_jam_p0
@@ -329,13 +331,16 @@ ball_devices:
         jam_switch: s_trough_jam_p0
         eject_coil_jam_pulse: 15ms
         eject_targets: bd_plunger_p0
-        captures_from: playfield
-        ball_missing_target: playfield
+        captures_from: playfield0
+        ball_missing_target: playfield0
 
     bd_plunger_p0:
         ball_switches: s_plunger_p0
         eject_coil: c_plunger_p0
         eject_timeouts: 3s
+        eject_targets: playfield0
+        ball_missing_target: playfield0
+        captures_from: playfield0
 
     
 #     #dummy:
