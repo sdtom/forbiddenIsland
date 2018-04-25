@@ -25,7 +25,7 @@ slide_player:
         anchor_x: right
         anchor_y: bottom
         font_size: 50
-scoring:
+variable_player:
     s_cmbt_entrance_p1:
         score: 100
     s_cmbt_entrance_p0:
