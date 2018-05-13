@@ -1,0 +1,63 @@
+#config_version=5
+
+
+shows:
+  redFlicker:
+    - time: 0
+      lights:
+        (led): 9c2800
+    - time: +200ms
+      lights:
+        (led): ff6500
+    - time: +200ms
+      lights:
+        (led): 5f2300
+    - time: +200ms
+      lights:
+        (led): 991800
+    - time: +150ms 
+
+  greenFlicker:
+    - time: 0
+      lights:
+        (led): 289c00
+    - time: +200ms
+      lights:
+        (led): 65ff00
+    - time: +200ms
+      lights:
+        (led): 235f00
+    - time: +200ms
+      lights:
+        (led): 189900
+    - time: +150ms 
+
+  blueFlicker:
+    - time: 0
+      lights:
+        (led): 00189c
+    - time: +200ms
+      lights:
+        (led): 0055ff
+    - time: +200ms
+      lights:
+        (led): 00135f
+    - time: +200ms
+      lights:
+        (led): 000899
+    - time: +150ms 
+
+  cyanFlicker:
+    - time: 0
+      lights:
+        (led): 009c28
+    - time: +200ms
+      lights:
+        (led): 00ff65
+    - time: +200ms
+      lights:
+        (led): 005f23
+    - time: +200ms
+      lights:
+        (led): 009918
+    - time: +150ms 
