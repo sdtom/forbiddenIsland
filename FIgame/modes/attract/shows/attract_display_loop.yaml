@@ -5,7 +5,7 @@
     awesome_slide:
       widgets:
       - type: text
-        text: YOU ARE AWESOME
+        text: Attract Loop
         font_size: 50
       transition:
          type: push
@@ -37,7 +37,7 @@
          duration: 1s
          direction: right
 
-- duration: 3
+- duration: 3s
   slides:
     mission_pinball:
       widgets:

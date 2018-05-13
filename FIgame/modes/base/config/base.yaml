@@ -30,3 +30,18 @@ variable_player:
         score: 100
     s_cmbt_entrance_p0:
         score: 1000
+
+multiball_locks:
+  centerlock:
+    balls_to_lock: 3
+    balls_to_replace: 2
+    lock_devices: bd_centrtrough
+    source_playfield: playfield0
+
+multiballs:
+  centermultiball:
+    ball_count: 3
+    start_events: multiball_lock_centerlock_full
+    ball_locks: bd_centrtrough
+    replace_balls_in_play: true
+    source_playfield: playfield0
